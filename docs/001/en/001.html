@@ -11,12 +11,47 @@
       <head>
       <body>
         <main class='container'>
-        <h1>Using spread operator</h1>
-<h2>Remove fields from an object</h2>
-<pre><code class="language-js"><span class="hljs-keyword">const</span> { cleaned, other } = myObject;
+        <h1>Using spread operator with Objects in Node JS</h1>
+<p>In this article, we use node v22.7.0.</p>
+<p>For creating an object using the values of a previous object, we can use the spread operator.</p>
+<p>&quot;The spread (...) syntax allows an iterable, such as an array or string, to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected.&quot;, cf <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">documentation</a>.</p>
+<h2>Recreating a new object with all properties of a previous one</h2>
+<p>We create an object stats with properities. Each property is a number but it could be a string.</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> stats = {
+  <span class="hljs-attr">intelligence</span>: <span class="hljs-number">14</span>,
+  <span class="hljs-attr">agility</span>: <span class="hljs-number">12</span>,
+  <span class="hljs-attr">strength</span>: <span class="hljs-number">16</span>,
+};
+</code></pre>
+<p>If we want to create a new object with similar property, we can use spread operator.</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> otherStats = { ...stats };
+</code></pre>
+<p>So when</p>
+<pre><code class="language-js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(otherStats);
+</code></pre>
+<p>The output will be:</p>
+<pre><code class="language-js">{ <span class="hljs-attr">intelligence</span>: <span class="hljs-number">14</span>, <span class="hljs-attr">agility</span>: <span class="hljs-number">12</span>, <span class="hljs-attr">strength</span>:  }
+</code></pre>
+<p>Without spread operator, it is possible to use the most verbose <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign()</a>.</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> otherStats = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(stats);
 </code></pre>
 <h2>Adding properties to an object</h2>
-<pre><code class="language-js"><span class="hljs-keyword">const</span> myObject = { ...properties, <span class="hljs-attr">new</span>: newProperty };
+<p>If we want to create a deep copy of stats with a new field, we can use use Object.assign() and then adding the property</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> upgradedStats = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(stats);
+upgradedStats.<span class="hljs-property">perception</span> = <span class="hljs-number">19</span>;
+</code></pre>
+<p>Output will be:</p>
+<pre><code> { intelligence: 14, agility: 12, strength: 16, perception: 19 }
+</code></pre>
+<p>It is also possible to use <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Object/keys">Object.keys</a> operator:</p>
+<pre><code class="language-js"><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(stats).<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">stat</span>) =&gt;</span> {
+  upgradedStats[stat] = stats[stat];
+});
+
+upgradedStats.<span class="hljs-property">perception</span> = <span class="hljs-number">19</span>;
+</code></pre>
+<h2>Remove fields from an object</h2>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> { cleaned, other } = myObject;
 </code></pre>
 
         </main>
